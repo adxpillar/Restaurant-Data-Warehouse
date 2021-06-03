@@ -59,12 +59,13 @@ class SqlQueries:
 
     );
 
-    CREATE TABLE IF NOT EXISTS public.staging_ratings(
-        userID                        INT IDENTITY(1,1) PRIMARY KEY ENCODE ZSTD,
+    CREATE TABLE IF NOT EXISTS public.staging_reviews(
+        id                            INT IDENTITY(1,1) PRIMARY KEY ENCODE ZSTD, -- Surrogate key
+        userID                        INT ENCODE ZSTD,
         placeID                       INT ENCODE ZSTD,
-        place_rating                  INT ENCODE ZSTD,
-        food_rating                   INT ENCODE ZSTD,
-        service_rating                INT ENCODE ZSTD,
+        place_review                  INT ENCODE ZSTD,
+        food_review                   INT ENCODE ZSTD,
+        service_review                INT ENCODE ZSTD,
 
     )DISTSTYLE ALL
     SORTKEY();
@@ -105,25 +106,22 @@ class SqlQueries:
 
 
     ---Create fact table if required 
-    CREATE TABLE IF NOT EXISTS public.ratings(
+    CREATE TABLE IF NOT EXISTS public_fact_reviews(
         id                         INT IDENTITY(1,1) PRIMARY KEY ENCODE ZSTD, -- Surrogate key
         --Dimension tables ids 
         restaurant_id               INT ENCODE ZSTD,
         user_id                     INT ENCODE ZSTD,
 
         -- dimensions
+        );
 
-  
-    DROP TABLE IF EXISTS public.staging_cuisine;
-    DROP TABLE IF EXISTS public.staging_hours;
-    DROP TABLE IF EXISTS public.staging_ratings;
-    DROP TABLE IF EXISTS public.staging_user_cuisine;
-    DROP TABLE IF EXISTS public.staging_user_payment;
-    DROP TABLE IF EXISTS public.staging_user_profile;
-
-
+    CREATE TABLE IF NOT EXISTS public.user(
+        userID                      INT IDENTITY(1,1) PRIMARY KEY ENCODE ZSTD,
+        userRcuisine                VARCHAR(100) DEFAULT 'Unknown' ENCODE ZSTD,
 
     );
+
+
 
 
 
